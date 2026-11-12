@@ -1,0 +1,445 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:formatthias:config:schema:v1",
+  "title": "C# Organizer configuration",
+  "description": "Schema version 1. Directory config inheritance and first-match rules are defined in CODEX_DESIGN.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "root": {
+      "type": "boolean"
+    },
+    "organization": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "sortBy": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "accessibility",
+              "static",
+              "name",
+              "signature",
+              "original"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
+              },
+              "match": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "field",
+                        "event_field",
+                        "event_declaration",
+                        "constructor",
+                        "static_constructor",
+                        "property",
+                        "indexer",
+                        "method",
+                        "operator",
+                        "conversion_operator",
+                        "nested_class",
+                        "nested_struct",
+                        "nested_record",
+                        "nested_interface",
+                        "nested_enum",
+                        "delegate",
+                        "finalizer"
+                      ]
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  },
+                  "accessibility": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "public",
+                        "protected_internal",
+                        "protected",
+                        "internal",
+                        "private_protected",
+                        "private"
+                      ]
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  },
+                  "modifiersAll": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "const",
+                        "static",
+                        "readonly",
+                        "volatile",
+                        "async",
+                        "abstract",
+                        "virtual",
+                        "override",
+                        "sealed",
+                        "new",
+                        "extern",
+                        "unsafe",
+                        "partial",
+                        "required",
+                        "ref",
+                        "file",
+                        "scoped"
+                      ]
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  },
+                  "modifiersAny": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "const",
+                        "static",
+                        "readonly",
+                        "volatile",
+                        "async",
+                        "abstract",
+                        "virtual",
+                        "override",
+                        "sealed",
+                        "new",
+                        "extern",
+                        "unsafe",
+                        "partial",
+                        "required",
+                        "ref",
+                        "file",
+                        "scoped"
+                      ]
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  },
+                  "modifiersNone": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "const",
+                        "static",
+                        "readonly",
+                        "volatile",
+                        "async",
+                        "abstract",
+                        "virtual",
+                        "override",
+                        "sealed",
+                        "new",
+                        "extern",
+                        "unsafe",
+                        "partial",
+                        "required",
+                        "ref",
+                        "file",
+                        "scoped"
+                      ]
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  },
+                  "containingTypeKinds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "class",
+                        "struct",
+                        "record",
+                        "record_struct",
+                        "interface"
+                      ]
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  },
+                  "nameGlob": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "explicitInterface": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "sortBy": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "accessibility",
+                    "static",
+                    "name",
+                    "signature",
+                    "original"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "region": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[^\\r\\n#]+$"
+              }
+            },
+            "required": [
+              "id",
+              "region"
+            ]
+          }
+        },
+        "unmatched": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "behavior": {
+              "type": "string",
+              "enum": [
+                "preserve"
+              ]
+            },
+            "region": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n#]+$"
+            }
+          }
+        }
+      }
+    },
+    "regions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "regenerate"
+          ]
+        },
+        "minMembers": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "emitForUnmatched": {
+          "type": "boolean"
+        }
+      }
+    },
+    "wrapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "maxLineLength": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 40
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "strategy": {
+          "type": "string",
+          "enum": [
+            "when_exceeding_limit"
+          ]
+        },
+        "argumentLayout": {
+          "type": "string",
+          "enum": [
+            "one_per_line"
+          ]
+        },
+        "continuationIndentLevels": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "closingParenthesis": {
+          "type": "string",
+          "enum": [
+            "same_line"
+          ]
+        },
+        "preserveExistingMultiline": {
+          "type": "boolean"
+        },
+        "targets": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "methodCalls": {
+              "type": "boolean"
+            },
+            "methodDeclarations": {
+              "type": "boolean"
+            },
+            "constructorCalls": {
+              "type": "boolean"
+            },
+            "constructorDeclarations": {
+              "type": "boolean"
+            },
+            "constructorInitializers": {
+              "type": "boolean"
+            },
+            "localFunctions": {
+              "type": "boolean"
+            },
+            "delegateInvocations": {
+              "type": "boolean"
+            },
+            "recordPrimaryConstructors": {
+              "type": "boolean"
+            },
+            "lambdaParameters": {
+              "type": "boolean"
+            },
+            "attributes": {
+              "type": "boolean"
+            },
+            "indexers": {
+              "type": "boolean"
+            },
+            "tuples": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "format": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "blankLines": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "betweenFields": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "betweenProperties": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "betweenMethods": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "betweenConstructors": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "betweenGroups": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "afterTypeOpenBrace": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "beforeTypeCloseBrace": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "maxConsecutive": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10
+            }
+          }
+        }
+      }
+    },
+    "cleanup": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "organizeUsings": {
+          "type": "boolean"
+        },
+        "removeDuplicateUsings": {
+          "type": "boolean"
+        },
+        "removeUnusedUsings": {
+          "type": "boolean"
+        },
+        "trimTrailingWhitespace": {
+          "type": "boolean"
+        }
+      }
+    },
+    "exclusions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  }
+}

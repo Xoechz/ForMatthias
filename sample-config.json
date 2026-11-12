@@ -1,0 +1,191 @@
+{
+  "$schema": "./config.schema.json",
+  "schemaVersion": 1,
+  "root": false,
+  "organization": {
+    "enabled": true,
+    "sortBy": [
+      "accessibility",
+      "static",
+      "name",
+      "signature"
+    ],
+    "rules": [
+      {
+        "id": "constants",
+        "match": {
+          "kind": [
+            "field"
+          ],
+          "modifiersAll": [
+            "const"
+          ]
+        },
+        "region": "Constants"
+      },
+      {
+        "id": "static-fields",
+        "match": {
+          "kind": [
+            "field"
+          ],
+          "modifiersAll": [
+            "static"
+          ]
+        },
+        "region": "Static Fields"
+      },
+      {
+        "id": "instance-fields",
+        "match": {
+          "kind": [
+            "field"
+          ]
+        },
+        "region": "Fields"
+      },
+      {
+        "id": "static-constructors",
+        "match": {
+          "kind": [
+            "static_constructor"
+          ]
+        },
+        "region": "Static Constructors"
+      },
+      {
+        "id": "constructors",
+        "match": {
+          "kind": [
+            "constructor"
+          ]
+        },
+        "region": "Constructors"
+      },
+      {
+        "id": "events",
+        "match": {
+          "kind": [
+            "event_field",
+            "event_declaration"
+          ]
+        },
+        "region": "Events"
+      },
+      {
+        "id": "properties",
+        "match": {
+          "kind": [
+            "property"
+          ]
+        },
+        "region": "Properties"
+      },
+      {
+        "id": "indexers",
+        "match": {
+          "kind": [
+            "indexer"
+          ]
+        },
+        "region": "Indexers"
+      },
+      {
+        "id": "methods",
+        "match": {
+          "kind": [
+            "method"
+          ]
+        },
+        "region": "Methods"
+      },
+      {
+        "id": "operators",
+        "match": {
+          "kind": [
+            "operator",
+            "conversion_operator"
+          ]
+        },
+        "region": "Operators"
+      },
+      {
+        "id": "nested-types",
+        "match": {
+          "kind": [
+            "nested_class",
+            "nested_struct",
+            "nested_record",
+            "nested_interface",
+            "nested_enum",
+            "delegate"
+          ]
+        },
+        "region": "Nested Types"
+      },
+      {
+        "id": "finalizers",
+        "match": {
+          "kind": [
+            "finalizer"
+          ]
+        },
+        "region": "Finalizers"
+      }
+    ],
+    "unmatched": {
+      "behavior": "preserve",
+      "region": "Other Members"
+    }
+  },
+  "regions": {
+    "enabled": true,
+    "mode": "regenerate",
+    "minMembers": 1,
+    "emitForUnmatched": true
+  },
+  "wrapping": {
+    "enabled": true,
+    "maxLineLength": 120,
+    "strategy": "when_exceeding_limit",
+    "argumentLayout": "one_per_line",
+    "continuationIndentLevels": 1,
+    "closingParenthesis": "same_line",
+    "preserveExistingMultiline": true,
+    "targets": {
+      "methodCalls": true,
+      "methodDeclarations": true,
+      "constructorCalls": true,
+      "constructorDeclarations": true,
+      "constructorInitializers": true,
+      "localFunctions": true,
+      "delegateInvocations": true,
+      "recordPrimaryConstructors": true,
+      "lambdaParameters": true,
+      "attributes": false,
+      "indexers": false,
+      "tuples": false
+    }
+  },
+  "format": {
+    "enabled": true,
+    "blankLines": {
+      "betweenFields": 0,
+      "betweenProperties": 1,
+      "betweenMethods": 1,
+      "betweenConstructors": 1,
+      "betweenGroups": 1,
+      "afterTypeOpenBrace": 0,
+      "beforeTypeCloseBrace": 0,
+      "maxConsecutive": 1
+    }
+  },
+  "cleanup": {
+    "enabled": true,
+    "organizeUsings": true,
+    "removeDuplicateUsings": true,
+    "removeUnusedUsings": true,
+    "trimTrailingWhitespace": true
+  },
+  "exclusions": []
+}
