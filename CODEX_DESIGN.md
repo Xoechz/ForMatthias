@@ -61,7 +61,7 @@ Other defaults specified below are implementation choices consistent with the pl
 
 ### 0.3 Support baseline
 
-- Implement the tool on **.NET 10 LTS** (`net10.0`) as a cross-platform `dotnet tool` (Windows, Linux, macOS).
+- Implement the tool on **.NET 11** (`net11.0`) as a cross-platform `dotnet tool` (Windows, Linux, macOS).
 - Support C# language versions handled by the pinned Roslyn release; detect and skip unsupported syntax safely.
 - Pin one compatible **stable** set of `Microsoft.CodeAnalysis.*`, `Microsoft.CodeAnalysis.Workspaces.MSBuild`, `Microsoft.Build.Locator`, and related packages in central package management. Record exact selected versions in the repository when scaffolding; do not independently mix Roslyn package versions.
 - Use `System.CommandLine` only if its selected stable API is suitable; otherwise implement the small CLI with a maintained argument parser. No implementation should depend on unpinned prerelease behavior.
@@ -899,7 +899,7 @@ Each milestone must be independently testable and leave the repository building.
 
 ### M0 — Scaffold and public API spikes
 
-**Tasks:** Create .NET 10 solution and test projects; pin supported Roslyn/MSBuild packages; verify `MSBuildLocator` setup; confirm `MSBuildWorkspace` project and solution loading on Linux; inspect public formatting/import API; investigate stable IDE0005-style cleanup integration; confirm `.slnx` support or establish explicit unsupported diagnostic.
+**Tasks:** Create .NET 11 solution and test projects; pin supported Roslyn/MSBuild packages; verify `MSBuildLocator` setup; confirm `MSBuildWorkspace` project and solution loading on Linux; inspect public formatting/import API; investigate stable IDE0005-style cleanup integration; confirm `.slnx` support or establish explicit unsupported diagnostic.
 
 **Exit criteria:** `dotnet build` and `dotnet test` pass; tests demonstrate one syntax-only document formatting pass and one project-aware read with no writes; a short feasibility note records exact API/package versions and any constraints.
 
