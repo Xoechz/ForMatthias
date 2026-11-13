@@ -18,3 +18,9 @@ Supported conservatively: directive scopes and ambiguous comments produce diagno
 Local Linux verification and package smoke are recorded during implementation. Windows/macOS installation, stable-SDK verification and externally hosted CI results require their corresponding runners; defining a workflow is not evidence that it has run.
 
 Current local Release suite after Review 1: **100 passed, 0 failed, 0 skipped** (initial suite: 78). Review regressions cover combined partial symbols, baseline warning origins, invocation targets including inconsistent TFMs, multiline formatting, structural ownership and incomplete generated bindings. See [review verification](review1-verification.md) for recorded external/project/throughput evidence and installed-package checks. `.gitattributes` fixes fixture checkout line endings for cross-platform golden comparisons.
+
+After Review 2: **112 passed, 0 failed, 0 skipped**. Twelve additional cases
+cover early/late report symlinks in check/diff modes, linked parent/source paths,
+ordinary report replacement, nested organization and wrap-only indentation with
+unequal indent/tab widths. See [Review 2 verification](review2-verification.md)
+for the simplified GPLv3 packaging and installed-package checks.

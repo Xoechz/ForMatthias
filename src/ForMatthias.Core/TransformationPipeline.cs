@@ -140,7 +140,7 @@ public sealed class TransformationPipeline : ITransformationPipeline
             var gap = formatted.ToString(span);
             if (!gap.All(char.IsWhiteSpace)) { continue; }
             var lastBreak = Math.Max(gap.LastIndexOf('\n'), gap.LastIndexOf('\r'));
-            var indentation = lastBreak >= 0 ? gap[(lastBreak + 1)..] : new string(formatted.Lines.GetLineFromPosition(right.SpanStart).ToString().TakeWhile(c => c is ' ' or '\t').ToArray()) + editor.Indent;
+            var indentation = lastBreak >= 0 ? gap[(lastBreak + 1)..] : editor.ContinueIndent(new string(formatted.Lines.GetLineFromPosition(right.SpanStart).ToString().TakeWhile(c => c is ' ' or '\t').ToArray()));
             var replacement = string.Concat(Enumerable.Repeat(editor.NewLine, lines)) + indentation;
             if (replacement != gap) { edits.Add(new TextChange(span, replacement)); }
         }
@@ -157,7 +157,7 @@ public sealed class TransformationPipeline : ITransformationPipeline
         {
             var openingLine = source.Lines.GetLineFromPosition(list.SpanStart);
             var baseIndent = indentation.GetValueOrDefault(openingLine.Start) ?? new string(openingLine.ToString().TakeWhile(c => c is ' ' or '\t').ToArray());
-            var desired = baseIndent + string.Concat(Enumerable.Repeat(editor.Indent, config.GetNumber("wrapping.continuationIndentLevels", 1)));
+            var desired = editor.ContinueIndent(baseIndent, config.GetNumber("wrapping.continuationIndentLevels", 1));
             var items = list is ArgumentListSyntax arguments ? arguments.Arguments.Cast<SyntaxNode>() : ((ParameterListSyntax)list).Parameters;
             foreach (var item in items)
             {

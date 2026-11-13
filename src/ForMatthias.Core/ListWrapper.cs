@@ -41,7 +41,7 @@ public static class ListWrapper
                 }
                 var lineText = firstLine.ToString();
                 var leading = new string(lineText.TakeWhile(c => c is ' ' or '\t').ToArray());
-                var indentation = leading + string.Concat(Enumerable.Repeat(editor.Indent, config.GetNumber("wrapping.continuationIndentLevels", 1)));
+                var indentation = editor.ContinueIndent(leading, config.GetNumber("wrapping.continuationIndentLevels", 1));
                 var builder = new StringBuilder("(").Append(editor.NewLine);
                 for (var index = 0; index < items.Length; index++)
                 {

@@ -7,10 +7,30 @@
     <Version>1.0.0</Version>
     <Description>Conservative, configurable Roslyn C# organizer and formatter.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <Authors>Elias Leonhardsberger</Authors>
+    <Copyright>Copyright (C) 2026 Elias Leonhardsberger</Copyright>
+    <RepositoryUrl>https://github.com/Xoechz/ForMatthias</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/Xoechz/ForMatthias</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../ForMatthias.Workspaces/ForMatthias.Workspaces.csproj" />
     <None Include="../../README.md" Pack="true" PackagePath="/" />
+    <None Include="../../LICENSE;../../SOURCE.md;../../THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="/" />
   </ItemGroup>
+  <Target Name="IncludeDependencyNotices" BeforeTargets="_GetPackageFiles" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <_NoticePackage Include="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' != ''">
+        <RelativeDirectory>$([System.String]::Copy('%(ReferenceCopyLocalPaths.NuGetPackageId)').ToLowerInvariant())/%(ReferenceCopyLocalPaths.NuGetPackageVersion)</RelativeDirectory>
+      </_NoticePackage>
+    </ItemGroup>
+    <RemoveDuplicates Inputs="@(_NoticePackage->'%(RelativeDirectory)')">
+      <Output TaskParameter="Filtered" ItemName="_NoticeDirectory" />
+    </RemoveDuplicates>
+    <ItemGroup>
+      <None Include="$(NuGetPackageRoot)%(_NoticeDirectory.Identity)/ThirdPartyNotices.rtf" Condition="Exists('$(NuGetPackageRoot)%(_NoticeDirectory.Identity)/ThirdPartyNotices.rtf')" Pack="true" PackagePath="licenses/%(_NoticeDirectory.Identity)/" />
+      <None Include="$(NuGetPackageRoot)%(_NoticeDirectory.Identity)/THIRD-PARTY-NOTICES.TXT" Condition="Exists('$(NuGetPackageRoot)%(_NoticeDirectory.Identity)/THIRD-PARTY-NOTICES.TXT')" Pack="true" PackagePath="licenses/%(_NoticeDirectory.Identity)/" />
+    </ItemGroup>
+  </Target>
 </Project>

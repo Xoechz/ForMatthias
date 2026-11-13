@@ -97,5 +97,14 @@ See [development](docs/development.md), [API feasibility](docs/feasibility.md), 
 
 Copyright (C) 2026 Elias Leonhardsberger
 
-This project is licensed under the GNU General Public License v3.0.
-See the LICENSE file for details.
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License **version 3 only** as published by
+the Free Software Foundation (SPDX: `GPL-3.0-only`). It is distributed without
+any warranty; without even the implied warranty of merchantability or fitness
+for a particular purpose. See [LICENSE](LICENSE) for the complete terms.
+
+Packages include the project license and dependency notices. See
+[SOURCE.md](SOURCE.md) for release-matched repository source, rebuilding and
+dependency source access, and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)
+for dependency licenses. Formatting your own source does not by itself change
+its license.

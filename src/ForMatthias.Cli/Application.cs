@@ -38,6 +38,7 @@ public static class Application
     {
         output ??= Console.Out; error ??= Console.Error;
         CliOptions? options = null;
+        string? reportDestination = null;
         var report = new RunReport();
         using var interrupt = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         ConsoleCancelEventHandler handler = (_, e) => { e.Cancel = true; interrupt.Cancel(); };
@@ -50,11 +51,9 @@ public static class Application
             if (options.Help) { await output.WriteLineAsync(HelpText.AsMemory(), ct); return 0; }
             if (options.Version) { await output.WriteLineAsync(ToolVersion.AsMemory(), ct); return 0; }
             var selection = Discovery.Select(options.Path, options.Workspace);
-            if (options.Report is { } requestedReport && (Path.GetExtension(requestedReport).Equals(".cs", StringComparison.OrdinalIgnoreCase)
-                || PhysicalPaths.Comparer.Equals(Path.GetFullPath(requestedReport), selection.Input)
-                || selection.ProjectPath is not null && PhysicalPaths.Comparer.Equals(Path.GetFullPath(requestedReport), selection.ProjectPath)))
+            if (options.Report is { } requestedReport)
             {
-                throw new OrganizerException(2, "CSORG1002", "Report path must not overwrite a source, project, or selected input.");
+                reportDestination = ReportWriter.Validate(requestedReport, new[] { selection.Input, selection.ProjectPath }.OfType<string>());
             }
             report.Input = selection.Input;
             var resolver = new ConfigurationResolver();
@@ -190,11 +189,9 @@ public static class Application
         {
             try
             {
-                var fullReportPath = Path.GetFullPath(reportPath);
-                if (report.Files.Any(f => PhysicalPaths.Comparer.Equals(f.Path, fullReportPath))) { throw new IOException("Report path must not overwrite an input source file."); }
-                Directory.CreateDirectory(Path.GetDirectoryName(fullReportPath)!);
-                await File.WriteAllTextAsync(fullReportPath, JsonSerializer.Serialize(report, JsonOptions) + "\n", CancellationToken.None);
+                await ReportWriter.WriteAsync(reportPath, reportDestination, report.Files.Select(f => f.Path).Append(report.Input).Where(p => p.Length > 0), JsonSerializer.Serialize(report, JsonOptions) + "\n");
             }
+            catch (OrganizerException exception) { await error.WriteLineAsync(exception.Message.AsMemory(), CancellationToken.None); exit = Prioritize(exit, exception.ExitCode); }
             catch (Exception exception) when (exception is IOException or UnauthorizedAccessException) { await error.WriteLineAsync(exception.Message.AsMemory(), CancellationToken.None); exit = Prioritize(exit, 5); }
         }
         return exit;

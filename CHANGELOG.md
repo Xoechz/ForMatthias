@@ -23,3 +23,11 @@ Known constraints and verification status are tracked in `ISSUES.md` and `docs/s
 - Enforce declaration ownership by namespace/type/physical part, per-token directive context, body-region boundaries and configured generated-region membership.
 - Preserve imports when compiler contexts have errors or missing generated bindings; regression found by rebuilding the supplied Delifhery solution.
 - Add review regression coverage and a reproducible external/project/throughput verification executable.
+
+### Review 2 corrections
+
+- Reject report symlinks and physical source aliases before processing and again before writing; replace report files without truncating a linked target.
+- Generate organization and continuation indentation from visual columns, respecting independent EditorConfig indentation and tab widths.
+- Align README and NuGet metadata on GPL-3.0-only; package the project license and required dependency notices.
+- Document release-matched repository source, dependency source links and rebuilding instructions without custom source-archive or inventory tooling.
+- Add twelve report/indentation regression cases; Release verification now passes 112 tests.

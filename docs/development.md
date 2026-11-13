@@ -41,6 +41,20 @@ The synthetic mode explicitly restores a reproducible 10-project dependency chai
 
 The tool command is `formatthias`. Local manifests support `dotnet formatthias` and `dotnet tool run formatthias`. Global/tool-path installations use the standalone command. The SDK rejects multi-command tool settings, so a second global `dotnet-` alias is not packaged; see Issue 6.
 
+The project is GPL-3.0-only. The package contains `LICENSE`, `SOURCE.md`,
+`THIRD-PARTY-NOTICES.md`, and original upstream notices under `licenses/`.
+The pack target gathers those notices from resolved copy-local NuGet dependencies;
+it needs no extra packaging executable or online downloads after restore.
+When upgrading dependencies, review their notices and update the version-matched
+source links in [SOURCE.md](../SOURCE.md).
+
+Before publishing a binary, publish its matching source commit and verify the
+package's repository metadata points to it. Link to that source alongside the
+release download, with dependency source access as documented in `SOURCE.md`.
+A public, release-matched repository supplies project source without embedding
+source ZIPs in each package. Local dirty-tree packages are verification artifacts,
+not evidence that the matching source has already been published.
+
 ## Reporting and limitations
 
 Diagnostic IDs are stable `CSORG` categories from the design. Reports have schema/tool versions, mode/input, normalized-path file statuses, applied/skipped capabilities, source spans, counts, hashes, committed flags and summary/exit code. Diagnostic ordering is normalized path then span then ID. Full source text is omitted.

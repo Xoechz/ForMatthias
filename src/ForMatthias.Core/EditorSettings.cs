@@ -51,8 +51,11 @@ public sealed record EditorSettings(IReadOnlyDictionary<string, string> Values, 
     public int Number(string key, int fallback) => Values.TryGetValue(key, out var value) && int.TryParse(value, out var number) && number > 0 ? number : fallback;
     public int IndentSize => Number("indent_size", TabWidth);
     public int TabWidth => Number("tab_width", Number("indent_size", 4));
-    public bool UseTabs => Values.GetValueOrDefault("indent_style") == "tab";
-    public string Indent => UseTabs ? "\t" : new string(' ', IndentSize);
+    public bool UseTabs => string.Equals(Values.GetValueOrDefault("indent_style"), "tab", StringComparison.OrdinalIgnoreCase);
+    public string Indent => Indentation(IndentSize);
+    public string Indentation(int columns) => UseTabs ? new string('\t', columns / TabWidth) + new string(' ', columns % TabWidth) : new string(' ', columns);
+    public string IndentLevels(int levels) => Indentation(levels * IndentSize);
+    public string ContinueIndent(string existing, int levels = 1) => Indentation(ListWrapper.Width(existing, TabWidth) + levels * IndentSize);
     public int LineLength => Number("max_line_length", 120);
 
     public static EditorSettings Resolve(string path, string originalNewLine = "\n")
@@ -88,7 +91,7 @@ public sealed record EditorSettings(IReadOnlyDictionary<string, string> Values, 
                 }
             }
         }
-        var newline = values.GetValueOrDefault("end_of_line") switch { "crlf" => "\r\n", "cr" => "\r", "lf" => "\n", _ => originalNewLine };
+        var newline = values.GetValueOrDefault("end_of_line")?.ToLowerInvariant() switch { "crlf" => "\r\n", "cr" => "\r", "lf" => "\n", _ => originalNewLine };
         return new EditorSettings(values, files, newline);
     }
 }

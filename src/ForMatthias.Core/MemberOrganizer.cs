@@ -51,7 +51,8 @@ public sealed class MemberOrganizer(EffectiveConfig config, EditorSettings edito
         if (constrained) { diagnostics.Add(new("CSORG3001", "Safety constraints prevent the preferred unconstrained order.", path, type.SpanStart, type.Span.Length)); }
         var generate = config.Bool("regions.enabled");
         var newline = editor.NewLine;
-        var indent = string.Concat(Enumerable.Repeat(editor.Indent, originalType.AncestorsAndSelf().Count(n => n is BaseNamespaceDeclarationSyntax or TypeDeclarationSyntax) - (originalType.Ancestors().Any(n => n is FileScopedNamespaceDeclarationSyntax) ? 1 : 0)));
+        var indentDepth = originalType.AncestorsAndSelf().Count(n => n is TypeDeclarationSyntax or NamespaceDeclarationSyntax);
+        var indent = editor.IndentLevels(indentDepth);
         // Prefer the declaration's own existing indentation where available.
         var output = new List<MemberDeclarationSyntax>();
         var pendingClose = "";
@@ -88,7 +89,7 @@ public sealed class MemberOrganizer(EffectiveConfig config, EditorSettings edito
         var openTrailing = WithoutRegions(type.OpenBraceToken.TrailingTrivia).ToFullString().TrimEnd('\r', '\n', ' ', '\t') + newline + string.Concat(Enumerable.Repeat(newline, config.GetNumber("format.blankLines.afterTypeOpenBrace", 0)));
         var closeLeading = WithoutRegions(type.CloseBraceToken.LeadingTrivia).ToFullString().Trim('\r', '\n', ' ', '\t');
         // Comments immediately before the closing brace remain at that boundary.
-        closeLeading = pendingClose + string.Concat(Enumerable.Repeat(newline, config.GetNumber("format.blankLines.beforeTypeCloseBrace", 0))) + (closeLeading.Length > 0 ? closeLeading + newline : "") + indent[..Math.Max(0, indent.Length - editor.Indent.Length)];
+        closeLeading = pendingClose + string.Concat(Enumerable.Repeat(newline, config.GetNumber("format.blankLines.beforeTypeCloseBrace", 0))) + (closeLeading.Length > 0 ? closeLeading + newline : "") + editor.IndentLevels(indentDepth - 1);
         return type.WithOpenBraceToken(type.OpenBraceToken.WithTrailingTrivia(SyntaxFactory.ParseTrailingTrivia(openTrailing)))
             .WithMembers(SyntaxFactory.List(output)).WithCloseBraceToken(type.CloseBraceToken.WithLeadingTrivia(SyntaxFactory.ParseLeadingTrivia(closeLeading)));
     }

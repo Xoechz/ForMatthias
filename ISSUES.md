@@ -1,5 +1,23 @@
 # Implementation issues
 
+## Issue 15 - Report aliases could overwrite source in read-only mode (resolved)
+
+M1 / M6 — Review 2 finding 1
+
+Report validation previously compared lexical paths while source identity resolved symlinks. The report writer now rejects leaf symlinks, resolves parent aliases, protects physical inputs and rechecks the destination before replacing its directory entry via a temporary file. Regression cases cover check/diff, links introduced during processing, linked parent directories, and ordinary report replacement.
+
+## Issue 16 - Custom indentation ignored independent tab width (resolved)
+
+M4 — Review 2 finding 2
+
+Custom organization and wrapping treated one indentation level as one tab. They now derive tabs and residual spaces from visual columns at each depth or continuation, including indent sizes smaller than tab width. Regressions cover 8/4, 4/8 and 4/3 indent/tab combinations and byte-identical second passes.
+
+## Issue 17 - Package license and distribution information were inconsistent (resolved for packaging)
+
+M7 — Review 2 findings 3–5
+
+The user confirmed GPL-3.0-only with repository-based source access. README and package metadata now agree; the package includes the official GPL text, MIT dependency attributions and original upstream notices. SOURCE.md supplies matching dependency source URLs, project-source directions and rebuilding instructions. The current LICENSE matches the official FSF text exactly. The proposed extra source-ZIP/inventory tooling was removed. Publishing the exact matching source revision remains a release-time responsibility; no source/package publication occurred here. Verification: 112 tests pass, fresh package installation and installed project-mode check/diff succeed. See docs/review2-verification.md.
+
 ## Issue 1 - Installed SDK is a release candidate
 
 M0 / M7
