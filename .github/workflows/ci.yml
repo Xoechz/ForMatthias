@@ -1,0 +1,28 @@
+name: build-test-package
+on:
+  push:
+  pull_request:
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '11.0.x'
+          dotnet-quality: 'preview'
+      - run: dotnet restore ForMatthias.slnx
+      - run: dotnet build ForMatthias.slnx --no-restore -c Release
+      - run: dotnet test ForMatthias.slnx --no-build --no-restore -c Release
+      - run: dotnet pack src/ForMatthias.Cli --no-build --no-restore -c Release -o artifacts
+      - run: dotnet tool install dotnet-formatthias --tool-path artifacts/tool --add-source artifacts --version 1.0.0
+      - run: artifacts/tool/formatthias --version
+      - run: dotnet restore tests/Repositories/Smoke/Smoke.slnx
+      - run: artifacts/tool/formatthias tests/Repositories/Smoke/Smoke.slnx --check
+      - run: dotnet tool restore --add-source artifacts
+      - run: dotnet tool run formatthias tests/Repositories/Smoke/Smoke.slnx --check
+      - run: dotnet formatthias tests/Repositories/Smoke/Smoke.slnx --check

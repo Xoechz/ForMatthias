@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
+    <EmbeddedResource Include="../../config.schema.json" LogicalName="config.schema.json" />
+    <EmbeddedResource Include="../../sample-config.json" LogicalName="defaults.json" />
+  </ItemGroup>
+</Project>

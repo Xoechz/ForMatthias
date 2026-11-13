@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ForMatthias.Core/ForMatthias.Core.csproj" />
+    <Project Path="src/ForMatthias.Workspaces/ForMatthias.Workspaces.csproj" />
+    <Project Path="src/ForMatthias.Cli/ForMatthias.Cli.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ForMatthias.Tests/ForMatthias.Tests.csproj" />
+  </Folder>
+</Solution>
