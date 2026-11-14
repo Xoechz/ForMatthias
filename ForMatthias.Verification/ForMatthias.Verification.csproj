@@ -4,6 +4,6 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../../src/ForMatthias.Cli/ForMatthias.Cli.csproj" />
+    <ProjectReference Include="../../ForMatthias.Cli/ForMatthias.Cli.csproj" />
   </ItemGroup>
 </Project>

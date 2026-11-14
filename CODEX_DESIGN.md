@@ -102,12 +102,11 @@ Running without `--only` invokes all enabled capabilities. `--only organize` mus
 ├── .editorconfig
 ├── Directory.Packages.props
 ├── global.json                    # SDK selection if chosen/pinned
-├── src/
-│   ├── ForMatthias.Cli/            # executable, CLI, reports, exit status
-│   ├── ForMatthias.Core/           # config-independent transformation plan contracts
-│   ├── ForMatthias.Configuration/  # JSON, hierarchy, options, editorconfig bridge
-│   ├── ForMatthias.Roslyn/         # syntax transforms, format/wrap/imports, constraints
-│   └── ForMatthias.Workspaces/     # syntax backend and MSBuild project backend
+├── ForMatthias.Cli/            # executable, CLI, reports, exit status
+├── ForMatthias.Core/           # config-independent transformation plan contracts
+├── ForMatthias.Configuration/  # JSON, hierarchy, options, editorconfig bridge
+├── ForMatthias.Roslyn/         # syntax transforms, format/wrap/imports, constraints
+└── ForMatthias.Workspaces/     # syntax backend and MSBuild project backend
 ├── tests/
 │   ├── ForMatthias.UnitTests/
 │   ├── ForMatthias.GoldenTests/

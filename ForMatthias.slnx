@@ -1,9 +1,7 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/ForMatthias.Core/ForMatthias.Core.csproj" />
-    <Project Path="src/ForMatthias.Workspaces/ForMatthias.Workspaces.csproj" />
-    <Project Path="src/ForMatthias.Cli/ForMatthias.Cli.csproj" />
-  </Folder>
+  <Project Path="ForMatthias.Core/ForMatthias.Core.csproj" />
+  <Project Path="ForMatthias.Workspaces/ForMatthias.Workspaces.csproj" />
+  <Project Path="ForMatthias.Cli/ForMatthias.Cli.csproj" />
   <Folder Name="/tests/">
     <Project Path="tests/ForMatthias.Tests/ForMatthias.Tests.csproj" />
   </Folder>

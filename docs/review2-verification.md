@@ -22,7 +22,7 @@ the matching published repository revision, not a new distribution system.
 
 ```sh
 env -u DOTNET_ROOT -u DOTNET_ROOT_X64 dotnet test ForMatthias.slnx --no-restore -c Release
-env -u DOTNET_ROOT -u DOTNET_ROOT_X64 dotnet pack src/ForMatthias.Cli --no-restore -c Release -o /tmp/opencode/review2-fixed
+env -u DOTNET_ROOT -u DOTNET_ROOT_X64 dotnet pack ForMatthias.Cli --no-restore -c Release -o /tmp/opencode/review2-fixed
 ```
 
 - **112 tests passed, 0 failed, 0 skipped**, including twelve Review 2 regression

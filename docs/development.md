@@ -13,7 +13,7 @@ All projects target `net11.0`, solution format is SLNX, dependencies use central
 dotnet restore ForMatthias.slnx
 dotnet build ForMatthias.slnx --no-restore
 dotnet test ForMatthias.slnx --no-restore
-dotnet run --project src/ForMatthias.Cli -- ./ForMatthias.slnx --check
+dotnet run --project ForMatthias.Cli -- ./ForMatthias.slnx --check
 ```
 
 Integration fixtures restore explicitly before project loading. The loader itself never restores unless requested. TFM fixtures cover net10.0 and net11.0; reference packs can be downloaded during the explicit fixture restore. MSBuild property-discovery/restore subprocesses use `-nr:false` to avoid reusable child nodes retaining redirected pipes.
@@ -37,7 +37,7 @@ The synthetic mode explicitly restores a reproducible 10-project dependency chai
 
 ## Distribution
 
-`dotnet pack src/ForMatthias.Cli -c Release -o artifacts` creates `dotnet-formatthias.1.0.0.nupkg`. Test installation with `--tool-path`, or a standard local manifest. Packaging retains the Roslyn MSBuild BuildHost payload. Verify project-mode execution from the installed package, not just its version output. Recheck NuGet name ownership immediately before publishing; no publication happens during implementation.
+`dotnet pack ForMatthias.Cli -c Release -o artifacts` creates `dotnet-formatthias.1.0.0.nupkg`. Test installation with `--tool-path`, or a standard local manifest. Packaging retains the Roslyn MSBuild BuildHost payload. Verify project-mode execution from the installed package, not just its version output. Recheck NuGet name ownership immediately before publishing; no publication happens during implementation.
 
 The tool command is `formatthias`. Local manifests support `dotnet formatthias` and `dotnet tool run formatthias`. Global/tool-path installations use the standalone command. The SDK rejects multi-command tool settings, so a second global `dotnet-` alias is not packaged; see Issue 6.
 

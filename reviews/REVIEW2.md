@@ -18,7 +18,7 @@ results are recorded in [docs/review2-verification.md](../docs/review2-verificat
 
 ### 1. High — A report symlink can overwrite source during `--check`
 
-**Locations:** `src/ForMatthias.Cli/Application.cs:53–57,189–196`; compare physical-path normalization in `src/ForMatthias.Workspaces/SourceSnapshot.cs:37–51`.  
+**Locations:** `ForMatthias.Cli/Application.cs:53–57,189–196`; compare physical-path normalization in `ForMatthias.Workspaces/SourceSnapshot.cs:37–51`.  
 **Requirements:** Design §§0.2, 4.3 and 9.4: check/diff must never write source, and physical aliases must be handled safely.
 
 The report checks use its filename extension and `Path.GetFullPath`, while selected source paths use symlink-aware `PhysicalPaths.Normalize`. A report named `report.json` that links to `Input.cs` passes both checks. `File.WriteAllTextAsync` then follows that link and replaces the C# source with the JSON report, bypassing source validation and guarded commit.
@@ -35,7 +35,7 @@ The report checks use its filename extension and `Path.GetFullPath`, while selec
 
 ### 2. Medium — Custom indentation equates one indentation level with one tab
 
-**Locations:** `src/ForMatthias.Core/EditorSettings.cs:51–55`; consumers include `MemberOrganizer.cs:54,81` and `ListWrapper.cs:43–44`.  
+**Locations:** `ForMatthias.Core/EditorSettings.cs:51–55`; consumers include `MemberOrganizer.cs:54,81` and `ListWrapper.cs:43–44`.  
 **Requirements:** Design §§3.5, 8.1 and 8.2; FMT-01 requires EditorConfig indentation to be respected.
 
 `EditorSettings.Indent` returns exactly one tab whenever `indent_style = tab`, regardless of `indent_size` and `tab_width`. These are independent settings: an eight-column indent with four-column tabs requires two tabs.
@@ -57,7 +57,7 @@ Input: a class whose `Z` and `A` methods each start with two tabs. Running `--on
 
 ### 3. High — NuGet advertises MIT while the project declares GPLv3
 
-**Locations:** `src/ForMatthias.Cli/ForMatthias.Cli.csproj:10`; `README.md:96–101`; root `LICENSE`.
+**Locations:** `ForMatthias.Cli/ForMatthias.Cli.csproj:10`; `README.md:96–101`; root `LICENSE`.
 
 The project sets `PackageLicenseExpression` to `MIT`, while the README identifies the project as GNU GPL v3.0. A **freshly packed** `dotnet-formatthias.1.0.0.nupkg` contains:
 
@@ -82,7 +82,7 @@ Compared against the [FSF's official GPLv3 text](https://www.gnu.org/licenses/gp
 
 ### 5. High for distribution — Required notices and source-access information are missing from the package
 
-**Locations:** `src/ForMatthias.Cli/ForMatthias.Cli.csproj:12–15`; freshly generated package archive and `.nuspec`.
+**Locations:** `ForMatthias.Cli/ForMatthias.Cli.csproj:12–15`; freshly generated package archive and `.nuspec`.
 
 The package bundles Roslyn, Humanizer, MSBuild Locator, Microsoft extension/composition libraries and build-host dependencies. Archive inspection found **no LICENSE, COPYING or third-party notice files**. Only the README is explicitly packed as project documentation, and its relative `LICENSE` link has no target in the archive.
 
@@ -127,7 +127,7 @@ Those external runs are **existing recorded evidence**, not runs repeated for Re
 
 ```sh
 env -u DOTNET_ROOT -u DOTNET_ROOT_X64 dotnet test ForMatthias.slnx --no-restore -c Release
-env -u DOTNET_ROOT -u DOTNET_ROOT_X64 dotnet pack src/ForMatthias.Cli --no-restore -c Release -o /tmp/opencode/review2/package
+env -u DOTNET_ROOT -u DOTNET_ROOT_X64 dotnet pack ForMatthias.Cli --no-restore -c Release -o /tmp/opencode/review2/package
 ```
 
 - Release tests: **100 passed, 0 failed, 0 skipped**, approximately 1 minute 41 seconds of test execution.

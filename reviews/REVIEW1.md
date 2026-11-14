@@ -10,7 +10,7 @@ Date: 2026-11-12
 
 ### 1. High — Layout safety fails across partial declarations
 
-**Location:** `src/ForMatthias.Core/MemberOrganizer.cs:43–46`  
+**Location:** `ForMatthias.Core/MemberOrganizer.cs:43–46`  
 **Requirement:** Design §7.2 requires semantic resolution of layout/interop attributes in project mode.
 
 Layout protection only checks attributes on the current syntax declaration. It does not inspect the combined partial-type symbol.
@@ -29,7 +29,7 @@ The syntax-only attribute check also leaves a corresponding gap for COM attribut
 
 ### 2. Medium — Existing compiler warnings are incorrectly reported as new
 
-**Location:** `src/ForMatthias.Workspaces/ProjectSession.cs:145–150`  
+**Location:** `ForMatthias.Workspaces/ProjectSession.cs:145–150`  
 **Requirement:** Design §9.2 requires diagnostic identity to survive member movement.
 
 Diagnostic identity hashes every token in the containing declaration. For a diagnostic attached to a type, reorganizing its members changes that hash.
@@ -40,7 +40,7 @@ Diagnostic identity hashes every token in the containing declaration. For a diag
 
 ### 3. Medium — Method-call and delegate-invocation wrapping switches are not independent
 
-**Location:** `src/ForMatthias.Core/ListWrapper.cs:82`  
+**Location:** `ForMatthias.Core/ListWrapper.cs:82`  
 **Requirement:** Design §3.4 specifies configurable wrapping targets.
 
 Every invocation is enabled by `methodCalls OR delegateInvocations`.
@@ -51,7 +51,7 @@ Every invocation is enabled by `methodCalls OR delegateInvocations`.
 
 ### 4. Medium — Full formatting skips interiors of existing multiline lists
 
-**Location:** `src/ForMatthias.Core/TransformationPipeline.cs:82–115`  
+**Location:** `ForMatthias.Core/TransformationPipeline.cs:82–115`  
 **Requirement:** Design §8.1 requires full formatting to apply Roslyn spacing and indentation; preserving existing wrapping means preserving breakpoints.
 
 The implementation saves entire multiline argument/parameter lists and restores them after formatting. This preserves all interior whitespace, not merely existing line breaks.
@@ -62,7 +62,7 @@ The implementation saves entire multiline argument/parameter lists and restores 
 
 ### 5. Medium — Structural validation does not enforce all required ownership boundaries
 
-**Location:** `src/ForMatthias.Core/CandidateValidator.cs:19–32,44–64`  
+**Location:** `ForMatthias.Core/CandidateValidator.cs:19–32,44–64`  
 **Requirement:** Design §9.1 requires declaration mapping, ownership, directive scoping, and generated-region validation.
 
 Code inspection found:

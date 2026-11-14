@@ -2,7 +2,7 @@
 
 ForMatthias is Copyright (C) 2026 Elias Leonhardsberger, licensed under
 **GNU GPL version 3 only (SPDX: GPL-3.0-only)**. See `LICENSE` for the complete
-terms. The project repository is https://github.com/Xoechz/ForMatthias.
+terms. The project repository is <https://github.com/Xoechz/ForMatthias>.
 
 ## Matching project source
 
@@ -16,7 +16,7 @@ or download its archive at:
 
 `https://github.com/Xoechz/ForMatthias/archive/<commit>.zip`
 
-Release information is at https://github.com/Xoechz/ForMatthias/releases.
+Release information is at <https://github.com/Xoechz/ForMatthias/releases>.
 Source access is free and does not require a source archive inside the tool
 package. A locally packed build containing uncommitted changes is not represented
 by its Git commit alone: publish the matching source before distributing that
@@ -28,7 +28,7 @@ With that source checked out and a suitable .NET 11 SDK installed:
 dotnet restore ForMatthias.slnx
 dotnet build ForMatthias.slnx --no-restore -c Release
 dotnet test ForMatthias.slnx --no-restore -c Release
-dotnet pack src/ForMatthias.Cli --no-restore -c Release -o artifacts
+dotnet pack ForMatthias.Cli --no-restore -c Release -o artifacts
 dotnet tool install dotnet-formatthias --tool-path artifacts/tool --add-source artifacts --version 1.0.0
 ```
 

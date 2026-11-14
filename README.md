@@ -12,7 +12,7 @@ Install a .NET 11 SDK, then:
 dotnet restore ForMatthias.slnx
 dotnet build ForMatthias.slnx --no-restore -c Release
 dotnet test ForMatthias.slnx --no-restore -c Release
-dotnet pack src/ForMatthias.Cli --no-restore -c Release -o artifacts
+dotnet pack ForMatthias.Cli --no-restore -c Release -o artifacts
 dotnet tool install dotnet-formatthias --tool-path artifacts/tool --add-source artifacts --version 1.0.0
 artifacts/tool/formatthias --help
 ```
